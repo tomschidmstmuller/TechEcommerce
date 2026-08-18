@@ -2,7 +2,6 @@ import { Noto_Sans_JP, Inter } from "next/font/google";
 import "./globals.css";
 import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
-import Providers from "@/components/Providers";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
@@ -23,9 +22,41 @@ export const metadata = {
   description: "Premium electronics and gaming store. Discover the latest in technology.",
 };
 
-export default function RootLayout({ children }) {
+async function getAuthWrapper() {
+  if (process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    const { ClerkProvider } = await import("@clerk/nextjs");
+    const { ClerkAuthProvider } = await import("@/components/ClerkAuthProvider");
+    return { ClerkProvider, ClerkAuthProvider };
+  }
+  const { AuthProvider } = await import("@/components/AuthProvider");
+  return { AuthProvider };
+}
+
+export default async function RootLayout({ children }) {
+  const hasClerk = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+  if (hasClerk) {
+    const { ClerkProvider } = await import("@clerk/nextjs");
+    const { ClerkAuthProvider } = await import("@/components/ClerkAuthProvider");
+    return (
+      <ClerkProvider>
+        <ClerkAuthProvider>
+          <html lang="en">
+            <body className={`${notoSansJP.variable} ${inter.variable} font-body antialiased text-jp-navy bg-jp-bg`}>
+              <Toaster />
+              <AppContextProvider>
+                {children}
+              </AppContextProvider>
+            </body>
+          </html>
+        </ClerkAuthProvider>
+      </ClerkProvider>
+    );
+  }
+
+  const { AuthProvider } = await import("@/components/AuthProvider");
   return (
-    <Providers>
+    <AuthProvider>
       <html lang="en">
         <body className={`${notoSansJP.variable} ${inter.variable} font-body antialiased text-jp-navy bg-jp-bg`}>
           <Toaster />
@@ -34,6 +65,6 @@ export default function RootLayout({ children }) {
           </AppContextProvider>
         </body>
       </html>
-    </Providers>
+    </AuthProvider>
   );
 }

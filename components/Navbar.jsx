@@ -4,7 +4,7 @@ import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon } from "@/assets/assets";
 import Link from "next/link"
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
-import { useAuthSafe } from "@/components/Providers";
+import { useAuthSafe } from "@/components/AuthProvider";
 
 const navLinks = [
   { href: "/", label: "Home", jp: "ホーム" },

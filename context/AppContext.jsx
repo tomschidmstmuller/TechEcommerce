@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthSafe } from "@/components/Providers";
+import { useAuthSafe } from "@/components/AuthProvider";
 
 export const AppContext = createContext();
 
