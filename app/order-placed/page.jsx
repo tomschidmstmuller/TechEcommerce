@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useEffect } from 'react'
 
 const OrderPlaced = () => {
-
   const { router } = useAppContext()
 
   useEffect(() => {
@@ -15,12 +14,24 @@ const OrderPlaced = () => {
   }, [])
 
   return (
-    <div className='h-screen flex flex-col justify-center items-center gap-5'>
+    <div className='h-screen flex flex-col justify-center items-center gap-6 bg-jp-bg'>
       <div className="flex justify-center items-center relative">
-        <Image className="absolute p-5" src={assets.checkmark} alt='' />
-        <div className="animate-spin rounded-full h-24 w-24 border-4 border-t-green-300 border-gray-200"></div>
+        <div className="absolute w-24 h-24 rounded-full border border-jp-accent/20 animate-ping" />
+        <div className="w-20 h-20 rounded-full bg-jp-accent/10 flex items-center justify-center border border-jp-accent/20">
+          <Image className="w-8 h-8" src={assets.checkmark} alt='success' />
+        </div>
       </div>
-      <div className="text-center text-2xl font-semibold">Order Placed Successfully</div>
+      <div className="text-center">
+        <p className="text-[10px] font-jp tracking-jp-wide text-jp-light uppercase mb-2">
+          注文完了
+        </p>
+        <div className="text-2xl font-medium text-jp-navy tracking-tight">
+          Order Placed Successfully
+        </div>
+        <p className="text-sm text-jp-muted mt-2">
+          Redirecting to your orders...
+        </p>
+      </div>
     </div>
   )
 }
