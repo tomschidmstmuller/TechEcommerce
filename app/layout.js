@@ -2,6 +2,7 @@ import { Noto_Sans_JP, Inter } from "next/font/google";
 import "./globals.css";
 import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }) {
         <ClerkAuthProvider>
           <html lang="en">
             <body className={`${notoSansJP.variable} ${inter.variable} font-body antialiased text-jp-navy bg-jp-bg`}>
+              <LoadingScreen />
               <Toaster />
               <AppContextProvider>
                 {children}
@@ -59,6 +61,7 @@ export default async function RootLayout({ children }) {
     <AuthProvider>
       <html lang="en">
         <body className={`${notoSansJP.variable} ${inter.variable} font-body antialiased text-jp-navy bg-jp-bg`}>
+          <LoadingScreen />
           <Toaster />
           <AppContextProvider>
             {children}
